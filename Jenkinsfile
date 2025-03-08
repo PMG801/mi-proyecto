@@ -9,7 +9,16 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git 'https://github.com/usuario/mi-proyecto.git'
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/main']],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/PMG801/mi-proyecto.git',
+                            credentialsId: 'github-cred'
+                        ]]
+                    ])
+                }
             }
         }
 
